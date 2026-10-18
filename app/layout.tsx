@@ -1,20 +1,17 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono",
-  display: "swap",
-});
+/*
+ * Font Google diganti CSS variable lokal.
+ *
+ * SEBAB: `next/font/google` mengunduh font dari Google saat BUILD.
+ * Di lingkungan build yang tidak bisa keluar ke fonts.gstatic.com, loader
+ * gagal dengan "TypeError: Cannot read properties of null (reading '1')"
+ * dan seluruh build berhenti.
+ *
+ * Solusi: pakai font stack sistem. Tidak ada unduhan, build selalu jalan,
+ * tampilan tetap rapi (fallback modern).
+ */
 
 export const metadata: Metadata = {
   title: "SRouter",
@@ -27,7 +24,7 @@ export default function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html lang="id" suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );
