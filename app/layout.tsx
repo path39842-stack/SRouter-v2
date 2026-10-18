@@ -2,15 +2,15 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 /*
- * Font Google diganti CSS variable lokal.
+ * Font: Inter + JetBrains Mono, DI-HOST SENDIRI (public/fonts/).
  *
- * SEBAB: `next/font/google` mengunduh font dari Google saat BUILD.
- * Di lingkungan build yang tidak bisa keluar ke fonts.gstatic.com, loader
- * gagal dengan "TypeError: Cannot read properties of null (reading '1')"
- * dan seluruh build berhenti.
+ * Kenapa bukan `next/font/google`: loader itu mengunduh font dari Google
+ * SAAT BUILD. Di lingkungan build tanpa akses fonts.gstatic.com, build gagal
+ * dengan "TypeError: Cannot read properties of null (reading '1')".
  *
- * Solusi: pakai font stack sistem. Tidak ada unduhan, build selalu jalan,
- * tampilan tetap rapi (fallback modern).
+ * Hasil visual identik: nama variabel CSS sama seperti aslinya
+ * (--font-inter dan --font-mono), sehingga globals.css tidak perlu diubah.
+ * File @font-face ada di public/fonts.css dan diimpor di bawah.
  */
 
 export const metadata: Metadata = {
@@ -25,6 +25,9 @@ export default function Layout({
 }) {
   return (
     <html lang="id" suppressHydrationWarning>
+      <head>
+        <link rel="stylesheet" href="/fonts.css" />
+      </head>
       <body>{children}</body>
     </html>
   );
